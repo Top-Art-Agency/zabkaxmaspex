@@ -230,19 +230,19 @@ footer{background:var(--ink);color:#4B5563;text-align:center;padding:40px 60px;f
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-card" onclick="scrollTo('partnerzy')">
+    <div class="hero-card" onclick="goTo('partnerzy')">
       <span class="card-num">01</span><span class="card-label">Partnerzy — Maspex i Żabka</span><span class="card-badge badge-green">Role i zasoby</span>
     </div>
-    <div class="hero-card" onclick="scrollTo('mechanizmy')">
+    <div class="hero-card" onclick="goTo('mechanizmy')">
       <span class="card-num">02</span><span class="card-label">Mechanizmy promocyjne</span><span class="card-badge badge-amber">3 scenariusze</span>
     </div>
-    <div class="hero-card" onclick="scrollTo('timeline')">
+    <div class="hero-card" onclick="goTo('timeline')">
       <span class="card-num">03</span><span class="card-label">Harmonogram eventów 2026</span><span class="card-badge badge-green">11 festiwali</span>
     </div>
-    <div class="hero-card" onclick="scrollTo('nowe')">
+    <div class="hero-card" onclick="goTo('nowe')">
       <span class="card-num">04</span><span class="card-label">Nowe mechaniki — event → sklep</span><span class="card-badge badge-blue">7 konceptów</span>
     </div>
-    <div class="hero-card" onclick="scrollTo('propozycja')">
+    <div class="hero-card" onclick="goTo('propozycja')">
       <span class="card-num">05</span><span class="card-label">Karta propozycji dla klienta</span><span class="card-badge badge-amber">Gotowy 1-slajd</span>
     </div>
   </div>
@@ -250,11 +250,11 @@ footer{background:var(--ink);color:#4B5563;text-align:center;padding:40px 60px;f
 
 <!-- NAV -->
 <nav class="nav" id="mainNav">
-  <div class="nav-item active" onclick="scrollTo('partnerzy')">Partnerzy</div>
-  <div class="nav-item" onclick="scrollTo('mechanizmy')">Mechanizmy</div>
-  <div class="nav-item" onclick="scrollTo('timeline')">Harmonogram</div>
-  <div class="nav-item" onclick="scrollTo('nowe')">Nowe mechaniki</div>
-  <div class="nav-item" onclick="scrollTo('propozycja')">Propozycja</div>
+  <div class="nav-item active" onclick="goTo('partnerzy')">Partnerzy</div>
+  <div class="nav-item" onclick="goTo('mechanizmy')">Mechanizmy</div>
+  <div class="nav-item" onclick="goTo('timeline')">Harmonogram</div>
+  <div class="nav-item" onclick="goTo('nowe')">Nowe mechaniki</div>
+  <div class="nav-item" onclick="goTo('propozycja')">Propozycja</div>
 </nav>
 
 <!-- PARTNERZY -->
@@ -363,7 +363,13 @@ footer{background:var(--ink);color:#4B5563;text-align:center;padding:40px 60px;f
   <div class="section-label fade-in">Harmonogram 2026</div>
   <h2 class="section-title fade-in">Kalendarz festiwali<br>i eventów</h2>
   <p class="section-desc fade-in">Wszystkie 11 eventów posortowanych chronologicznie. Kliknij, aby zobaczyć szczegóły i rekomendacje mechanizmów.</p>
-  <div class="tl-grid fade-in" id="tlGrid"></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;font-size:12px;color:var(--muted);align-items:center;">
+  <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Legenda:</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#22C55E;display:inline-block"></span>Żabka obecna — pełna aktywacja</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;display:inline-block"></span>W negocjacjach</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#D1D5DB;display:inline-block"></span>Maspex obecny samodzielnie lub event niedostępny</span>
+</div>
+<div class="tl-grid fade-in" id="tlGrid"></div>
 </section>
 
 <!-- NOWE MECHANIKI — DARK -->
@@ -485,17 +491,17 @@ const overlayData = {
 };
 
 const events = [
-  {key:'php',name:"Polish Hip Hop Festival",date:"02.04.2026",month:4,sc:'wait',sl:'Żabka weryfikuje',brands:['m'],mechs:['kup','triki'],zb:true,note:"Profil hip-hop dobrze pasuje do Dr Witt. Żabka weryfikuje ofertę — warto przyspieszyć decyzję."},
-  {key:'silesia',name:"ING Silesia Beats",date:"12–13.06.2026",month:6,sc:'wait',sl:'Czekamy na ofertę',brands:['m'],mechs:['kup','kupon'],zb:true,note:"Event muzyczny w aglomeracji śląskiej. Dobry wolumen i profil konsumenta."},
-  {key:'siedlce',name:"Before Festiwal Siedlce",date:"20–21.06.2026",month:6,sc:'wait',sl:'Czekamy na ofertę',brands:['m'],mechs:['kup','kupon'],zb:true,note:"Event regionalny — dobry pilot mechanizmu kuponowego przy mniejszej skali."},
-  {key:'rapstacja',name:"RAP STACJA",date:"8–11.07.2026",month:7,sc:'no',sl:'Tiger partnerem',brands:[],mechs:[],zb:false,note:"Tiger jest partnerem eventu — obecność Maspex byłaby konfliktowa."},
-  {key:'ostroda',name:"Ostróda Reggae Festival",date:"23–26.07.2026",month:7,sc:'no',sl:'Bez Żabki',brands:['m'],mechs:['kup'],zb:false,note:"Maspex będzie obecny, ale bez stoiska Żabki."},
-  {key:'opener-gdansk',name:"Open'er — Gdańsk",date:"7–8.08.2026",month:8,sc:'z',sl:'Potwierdzony',brands:['m','z'],mechs:['kup','kupon','triki'],zb:true,note:"Największa szansa na wolumen. Pełen stack: kup i odbierz + kupon + Triki w happy hours."},
-  {key:'opener-poznan',name:"Open'er — Poznań",date:"20–22.08.2026",month:8,sc:'z',sl:'Potwierdzony',brands:['m','z'],mechs:['kup','kupon','triki'],zb:true,note:"Środkowa edycja trasy. Testy porównawcze skuteczności mechanizmów."},
-  {key:'opener-krakow',name:"Open'er — Kraków",date:"28–29.08.2026",month:8,sc:'z',sl:'Potwierdzony',brands:['m','z'],mechs:['kup','kupon','triki'],zb:true,note:"Finał trasy Open'era. Wdrożenie optymalnego miksu."},
-  {key:'baltic',name:"Baltic Drive Festival",date:"7–9.09.2026",month:9,sc:'no',sl:'Bez Żabki',brands:['m'],mechs:['kup'],zb:false,note:"Maspex bez Żabki. Można rozważyć mechanikę cyfrową niezależnie."},
-  {key:'rockowizna',name:"Rockowizna",date:"TBD",month:10,sc:'z',sl:'Będziemy',brands:['m'],mechs:['kup','triki'],zb:true,note:"Profil rockowy bardziej pasuje do Tymbarku. Dr Witt do weryfikacji."},
-  {key:'pga',name:"PGA",date:"23–25.10.2026",month:10,sc:'hi',sl:'Negocjujemy',brands:['m'],mechs:['kup','zapps'],zb:true,note:"Format lifestyle/sportowy — idealny dla Dr Witt. Pilot Żappsów jako mechanizm płatności."}
+  {key:'php',name:"Polish Hip Hop Festival",date:"02.04.2026",month:4,sc:'wait',sl:'Żabka weryfikuje',brands:['m'],mechs:['kup','triki'],zb:true,note:"Profil hip-hop dobrze pasuje do Dr Witt jako napoju funkcjonalnego. Żabka weryfikuje ofertę — warto przyspieszyć decyzję po stronie Żabki."},
+  {key:'silesia',name:"ING Silesia Beats",date:"12–13.06.2026",month:6,sc:'wait',sl:'Czekamy na ofertę',brands:['m'],mechs:['kup','kupon'],zb:true,note:"Event muzyczny w aglomeracji śląskiej. Dobry wolumen i profil konsumenta pasujący do obu marek. Czekamy na ofertę współpracy."},
+  {key:'siedlce',name:"Before Festiwal Siedlce",date:"20–21.06.2026",month:6,sc:'wait',sl:'Czekamy na ofertę',brands:['m'],mechs:['kup','kupon'],zb:true,note:"Event regionalny — dobry pilot mechanizmu kuponowego przy mniejszej skali. Czekamy na ofertę współpracy."},
+  {key:'rapstacja',name:"RAP STACJA",date:"8–11.07.2026",month:7,sc:'no',sl:'Tiger partnerem',brands:[],mechs:[],zb:false,note:"Na tym evencie Tiger Energy jest oficjalnym partnerem kategorii napojów energetycznych. Wejście Maspex byłoby sprzeczne z umową partnerską — event poza zakresem współpracy."},
+  {key:'ostroda',name:"Ostróda Reggae Festival",date:"23–26.07.2026",month:7,sc:'no',sl:'Maspex — bez Żabki',brands:['m'],mechs:['kup'],zb:false,note:"Maspex będzie obecny na evencie samodzielnie (własne stoisko lub dystrybucja), ale Mobilna Żabka nie uczestniczy w tej edycji. Brak możliwości aktywacji mechanizmów aplikacji Żabka."},
+  {key:'rockowizna-gdansk',name:"Rockowizna — Gdańsk",date:"7–8.08.2026",month:8,sc:'z',sl:'Będziemy',brands:['m'],mechs:['kup','triki'],zb:true,note:"Pierwsza z trzech edycji Rockowizny w sezonie letnim. Profil rockowy pasuje do Tymbarku. Dr Witt do weryfikacji pod kątem tej grupy docelowej."},
+  {key:'rockowizna-poznan',name:"Rockowizna — Poznań",date:"20–22.08.2026",month:8,sc:'z',sl:'Będziemy',brands:['m'],mechs:['kup','triki'],zb:true,note:"Druga edycja trasy Rockowizny. Warto zebrać dane ze sprzedaży z Gdańska i zoptymalizować miks produktowy przed Krakowem."},
+  {key:'rockowizna-krakow',name:"Rockowizna — Kraków",date:"28–29.08.2026",month:8,sc:'z',sl:'Będziemy',brands:['m'],mechs:['kup','triki'],zb:true,note:"Finał trasy Rockowizny. Wdrożenie optymalnego miksu na bazie danych z poprzednich edycji."},
+  {key:'baltic',name:"Baltic Drive Festival",date:"7–9.09.2026",month:9,sc:'no',sl:'Maspex — bez Żabki',brands:['m'],mechs:['kup'],zb:false,note:"Maspex będzie obecny na evencie samodzielnie, ale Mobilna Żabka nie uczestniczy w tej edycji. Brak mechanizmów aplikacji — można rozważyć niezależną aktywację cyfrową po stronie Maspex."},
+  
+  {key:'pga',name:"PGA",date:"23–25.10.2026",month:10,sc:'hi',sl:'Negocjujemy',brands:['m'],mechs:['kup','zapps'],zb:true,note:"Format golfowy / lifestyle — idealny dla Dr Witt Hipertonic jako napoju funkcjonalnego. Trwają negocjacje warunków wejścia. Pilot Żappsów jako mechanizm płatności na strefie szczególnie pasuje do tej grupy docelowej."}
 ];
 
 const nmData = [
@@ -565,7 +571,7 @@ function closeOverlay(e) {
   }
 }
 
-function scrollTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+function goTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 
 let sortDir={};
 function sortT(col) {
