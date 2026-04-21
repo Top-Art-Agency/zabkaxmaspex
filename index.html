@@ -224,7 +224,7 @@ footer{background:var(--ink);color:#4B5563;text-align:center;padding:40px 60px;f
     <h1 class="hero-title">Aktywacje sprzedażowe<br><span class="m">Maspex</span> w <span class="z">Mobilnej Żabce</span></h1>
     <p class="hero-sub">Scenariusze i mechanizmy rozliczeń aktywacji promocyjnych na festiwalach i eventach. Strategie, harmonogram, propozycja współpracy.</p>
     <div class="hero-stats">
-      <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Eventów z Żabką 2026</div></div>
+      <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Eventów w kalendarzu Żabki</div></div>
       <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Mechanizmy promo</div></div>
       <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Nowe mechaniki</div></div>
     </div>
@@ -362,9 +362,9 @@ footer{background:var(--ink);color:#4B5563;text-align:center;padding:40px 60px;f
   <p class="section-desc fade-in">Wszystkie 11 eventów posortowanych chronologicznie. Kliknij, aby zobaczyć szczegóły i rekomendacje mechanizmów.</p>
   <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;font-size:12px;color:var(--muted);align-items:center;">
   <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Legenda:</span>
-  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#22C55E;display:inline-block"></span>Żabka obecna — pełna aktywacja</span>
-  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;display:inline-block"></span>W negocjacjach</span>
-  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#D1D5DB;display:inline-block"></span>Maspex obecny samodzielnie lub event niedostępny</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#22C55E;display:inline-block"></span>Żabka potwierdzona na evencie</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;display:inline-block"></span>Żabka w negocjacjach</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#D1D5DB;display:inline-block"></span>Żabka bez aktywacji lub event niedostępny</span>
 </div>
 <div class="tl-grid fade-in" id="tlGrid"></div>
 </section>
@@ -478,7 +478,6 @@ document.getElementById('tlGrid').innerHTML = [...events].sort((a,b)=>a.month-b.
     <div class="tl-dot ${e.sc==='z'?'z':e.sc==='hi'?'hi':'no'}"></div>
     <div class="tl-date">${e.date}</div>
     <div class="tl-name">${e.name}</div>
-    <div class="tl-brands">${e.brands.map(b=>`<span class="tl-brand ${b}">${b==='m'?'Maspex':'Żabka'}</span>`).join('')}</div>
     <span class="tl-status ${e.sc}">${e.sl}</span>
   </div>`).join('');
 
@@ -510,14 +509,12 @@ function openOverlay(key) {
 
 function openEventOverlay(key) {
   const e = events.find(x=>x.key===key);
-  const mechNames = {'kup':'Kup i odbierz','kupon':'Kupon w apce','triki':'Triki','zapps':'Żappsy'};
   document.getElementById('overlayContent').innerHTML = `
     <div class="overlay-title">${e.name}</div>
-    <div class="overlay-sub">${e.date} · ${e.sl}</div>
-    ${e.zb?'<div style="display:inline-block;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:#D1FAE5;color:#065F46;margin-bottom:20px;letter-spacing:1px;font-family:Syne,sans-serif">ŻABKA OBECNA</div>':''}
-    <div class="overlay-section-title">Rekomendacja:</div>
-    <p style="font-size:14px;line-height:1.7;color:#374151;margin-bottom:20px">${e.note}</p>
-    ${e.mechs.length?`<div class="overlay-section-title">Mechanizmy do zastosowania:</div><ul class="overlay-list">${e.mechs.map(mk=>`<li>${mechNames[mk]||mk}</li>`).join('')}</ul>`:'<p style="font-size:14px;color:#9CA3AF;font-style:italic">Brak mechanizmów Żabki na tym evencie.</p>'}`;
+    <div class="overlay-sub">${e.date}</div>
+    <div style="display:inline-block;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:20px;letter-spacing:1px;font-family:Syne,sans-serif;background:${e.sc==='z'?'#D1FAE5':e.sc==='hi'?'#FEF3C7':'#F3F4F6'};color:${e.sc==='z'?'#065F46':e.sc==='hi'?'#92400E':'#6B7280'}">${e.sl}</div>
+    <div class="overlay-section-title">Status / uwagi:</div>
+    <p style="font-size:14px;line-height:1.7;color:#374151;">${e.note}</p>`;
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
